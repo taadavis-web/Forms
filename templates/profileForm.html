@@ -1,0 +1,48 @@
+{% extends "base.html" %} {% block title%}{{super()}} - Profile{% endblock %} {%
+block content%}
+
+<h2>User Profile</h2>
+{% if error %}
+<p class="error">{{error}}</p>
+
+<form action="" method="post">
+  <div>
+    <label for="name">Name *:</label>
+    <input type="text" name="name" id="name" required />
+  </div>
+  <div>
+    <label for="email">Email *:</label>
+    <input type="email" name="email" id="email" required />
+  </div>
+  <div>
+    <label for="quan">Total Quantity *:</label>
+    <input type="number" name="quan" id="quan" min="1" , max="10" required />
+  </div>
+  <div>
+    <label for="comments">Comments or Issues:</label>
+    <textarea name="comments" id="comments" rows="4"></textarea>
+  </div>
+  <div>
+    <label for="rel">Relationship to me *:</label>
+    <select name="rel" id="rel" required>
+      <option value="">What is guest's relationship to me</option>
+      <option value="parent">Parent / Parent-in-law</option>
+      <option value="sibling">Sibling / Sibling-in-law</option>
+      <option value="other family">Other family member</option>
+      <option value="coworker etc.">Coworker or business</option>
+      <option value="friend">Friend</option>
+      <option value="other">Other</option>
+    </select>
+  </div>
+  <div>
+    <label for="accomodations">Accomodations Required</label>
+    <input
+      type="checkbox"
+      name="accommodations"
+      id="accomodations"
+      value="yes"
+    />
+  </div>
+  <button type="submit">Save Profile</button>
+</form>
+{% endif %} {% endblock %}

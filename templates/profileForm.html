@@ -4,6 +4,7 @@ block content%}
 <h2>User Profile</h2>
 {% if error %}
 <p class="error">{{error}}</p>
+{% endif %}
 
 <form action="" method="post">
   <div>
@@ -45,4 +46,4 @@ block content%}
   </div>
   <button type="submit">Save Profile</button>
 </form>
-{% endif %} {% endblock %}
+{% endblock %}

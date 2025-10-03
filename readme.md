@@ -5,12 +5,29 @@ This is a demo project for using forms in Flask applications.
 ## Running
 
 - Set up a Python virtual environment
-  - `python -m venv venv`
-  - `venv\scripts\activate`
+
+  ```bash
+  python -m venv venv
+  venv\scripts\activate
+  ```
+
 - Install project dependencies
-  - `pip install -r requirements.txt`
+
+  ```bash
+  pip install -r requirements.txt
+  ```
+
 - Create your `.env` file
-- Run the app with `flask run`
+
+  ```bash
+  cp .env-sample .env
+  ```
+
+- Run the app
+
+  ```bash
+  flask run --debug
+  ```
 
 ## Developing Your Own Version
 

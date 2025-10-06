@@ -41,3 +41,8 @@ To develop your own version of this project, you can `clone` or `fork` this repo
 - `main`: Includes all the regular demo code, with a profile page and matching results page.
 - `HistoryPage`: Adds a page to show all (in-memory) submissions to the profile form.
 - `WTForms`: Adds integration for the [WTForms](https://wtforms.readthedocs.io/en/3.2.x/) library (via [Flask_WTF](https://flask-wtf.readthedocs.io/en/1.2.x/)) for more powerful validation and input widgets.
+
+## Credits
+
+- Logo generated at https://freesvglogomaker.com/
+- Uses [Bootstrap](https://getbootstrap.com)

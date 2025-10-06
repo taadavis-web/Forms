@@ -82,7 +82,6 @@ def profile():
             accommodations=accommodations
         )
 
-    # This handles GET requests - moved outside the POST block
     return render_template('profileForm.html')
 
 
@@ -121,8 +120,6 @@ def feedback():
 def admin_profiles():
     profiles = Profile.query.all()
     return render_template('admin_profiles.html', profiles=profiles)
-
-# Didn't work  -  look at it later
 
 
 @app.route('/admin/feedback')

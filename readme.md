@@ -39,6 +39,10 @@ To develop your own version of this project, you can `clone` or `fork` this repo
 ## Branches
 
 - `main`: Includes all the regular demo code, with a profile page and matching results page.
+- `BeforeDB`: Includes template inheritance and forms, but no DataBase yet
+
+### Experimental Branches
+
 - `HistoryPage`: Adds a page to show all (in-memory) submissions to the profile form.
 - `WTForms`: Adds integration for the [WTForms](https://wtforms.readthedocs.io/en/3.2.x/) library (via [Flask_WTF](https://flask-wtf.readthedocs.io/en/1.2.x/)) for more powerful validation and input widgets.
 

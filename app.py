@@ -87,7 +87,26 @@ def profile():
 
 @app.route('/feedback', methods=['GET', 'POST'])
 def feedback():
-    if request.method == 'POST':
+    method = request.form.get('requestMethod', '')
+
+    if request.method == 'DELETE' or method == 'DELETE':
+        id = request.form.get('feedbackId')
+        try:
+            # thisFeedback = Feedback.query.filter_by(id=id).delete()
+
+            feedback = db.session.query(Feedback).filter(
+                Feedback.id == id).first()
+            db.session.delete(feedback)
+            db.session.commit()
+
+            # user = db.session.query(User).filter(User.my_id==1).first()
+            # db.session.delete(user)
+        except Exception as e:
+            db.session.rollback()
+            error = "An error occurred while deleting the record. Please try again."
+            return redirect(url_for('admin_feedback'))
+        return redirect(url_for('admin_feedback'))
+    elif request.method == 'POST':
         rating = request.form.get('rating', '').strip()
         comment_text = request.form.get('feedback', '').strip()
         if not rating:

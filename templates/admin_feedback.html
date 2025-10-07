@@ -1,15 +1,29 @@
 {% extends 'base.html' %} {% block title %}{{super()}} - Feedback Admin {%
 endblock%} {% block content %}
 <h1>All Feedback</h1>
+
+{% if error %}
+<p class="error">{{error}}</p>
+{% endif %}
+
 <table class="table table-striped" border="1">
   <tr>
     <th>Rating</th>
     <th>Comments</th>
+    <th>Delete</th>
   </tr>
   {% for feedback in feedbacks %}
   <tr>
     <td>{{ feedback.rating }}</td>
     <td>{{ feedback.comment }}</td>
+    <td class="btn btn-danger">
+      <form action="{{url_for('feedback')}}" method="POST">
+        <input name="feedbackId" type="hidden" value="{{feedback.id}}" />
+        <input name="requestMethod" type="hidden" value="DELETE" />
+
+        <button type="submit" name="submit" value="Submit">X</button>
+      </form>
+    </td>
   </tr>
   {% endfor %}
 </table>

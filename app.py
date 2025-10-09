@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timezone
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 
 app = Flask(__name__)
 
@@ -11,6 +13,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+admin = Admin(app, name='frmstr')
 
 class Profile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -21,6 +24,7 @@ class Profile(db.Model):
     rel = db.Column(db.String(50), nullable=False)
     accommodations = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+admin.add_view(ModelView(Profile, db.session))
 
 
 class Feedback(db.Model):
@@ -28,7 +32,7 @@ class Feedback(db.Model):
     rating = db.Column(db.Integer, nullable=False)
     comment = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
-
+admin.add_view(ModelView(Feedback, db.session))
 
 with app.app_context():
     db.create_all()

@@ -50,3 +50,4 @@ To develop your own version of this project, you can `clone` or `fork` this repo
 
 - Logo generated at https://freesvglogomaker.com/
 - Uses [Bootstrap](https://getbootstrap.com)
+- [Flask-Admin](https://github.com/pallets-eco/flask-admin)

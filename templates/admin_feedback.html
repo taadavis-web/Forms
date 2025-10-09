@@ -16,12 +16,12 @@ endblock%} {% block content %}
   <tr>
     <td>{{ feedback.rating }}</td>
     <td>{{ feedback.comment }}</td>
-    <td class="btn btn-danger">
+    <td class="delete-button">
       <form action="{{url_for('feedback')}}" method="POST">
         <input name="feedbackId" type="hidden" value="{{feedback.id}}" />
         <input name="requestMethod" type="hidden" value="DELETE" />
 
-        <button type="submit" name="submit" value="Submit">X</button>
+        <button class="btn btn-danger rounded-circle p-3 lh-1 box-shadow shadow" type="submit" name="submit" value="Submit">X</button>
       </form>
     </td>
   </tr>

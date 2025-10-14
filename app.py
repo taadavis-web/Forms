@@ -15,6 +15,7 @@ db = SQLAlchemy(app)
 
 admin = Admin(app, name='frmstr')
 
+
 class Profile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -24,6 +25,8 @@ class Profile(db.Model):
     rel = db.Column(db.String(50), nullable=False)
     accommodations = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+
+
 admin.add_view(ModelView(Profile, db.session))
 
 
@@ -32,6 +35,8 @@ class Feedback(db.Model):
     rating = db.Column(db.Integer, nullable=False)
     comment = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+
+
 admin.add_view(ModelView(Feedback, db.session))
 
 with app.app_context():
@@ -144,10 +149,29 @@ def admin_profiles():
     profiles = Profile.query.all()
     return render_template('admin_profiles.html', profiles=profiles)
 
+@app.route('/admin/profiles/sibling')
+def admin_profiles_sibling():
+    profiles = Profile.query.filter(Profile.rel == "sibling").all()
+    return render_template('admin_profiles.html', profiles=profiles)
+
 
 @app.route('/admin/feedback')
 def admin_feedback():
     feedbacks = Feedback.query.all()
+    return render_template('admin_feedback.html', feedbacks=feedbacks)
+
+
+@app.route('/admin/feedback/rating_1')
+def admin_feedback_rating_1():
+    feedbacks = Feedback.query.filter_by(rating=1).all()
+    return render_template('admin_feedback.html', feedbacks=feedbacks)
+
+
+@app.route('/admin/feedback/bad_review')
+def admin_feedback_bad_review():
+    feedbacks = Feedback.query.filter(Feedback.rating <= 3,
+                                      Feedback.comment.isnot(None),
+                                      Feedback.comment != "").all()
     return render_template('admin_feedback.html', feedbacks=feedbacks)
 
 

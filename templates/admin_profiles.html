@@ -17,6 +17,14 @@ endblock%} {% block content %}
 <a href="{{url_for('admin_profiles_delete_audacious_guests')}}"
   >Delete all audacious entries</a
 >
+<br />
+<div>
+  <form method="POST" action="{{url_for('admin_profilesDeleteByQuantity')}}">
+    <label for="quantity">Delete profiles with guests >= </label>
+    <input type="number" id="quantity" name="quantity" min="1" required />
+    <button type="submit">Delete</button>
+  </form>
+</div>
 
 <table class="table table-striped" border="1">
   <tr>

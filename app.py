@@ -130,16 +130,54 @@ def admin_profiles_deleteCoworker():
         profiles = Profile.query.all()
         return render_template('admin_profiles.html', profiles=profiles, error=error)
 
+
 @app.route('/admin/profiles/deleteAudaciousGuest')
 def admin_profiles_delete_audacious_guests():
     try:
         deleted_count = Profile.query.filter(Profile.quan > 5).delete()
-        
+
         db.session.commit()
-        
+
         return redirect(url_for('admin_profiles'))
     except Exception as e:
         error = f"Error deleting audacious profiles: {str(e)}"
+        profiles = Profile.query.all()
+        return render_template('admin_profiles.html', profiles=profiles, error=error)
+
+
+@app.route('/admin/profiles/deleteQuantity', methods=['POST'])
+def admin_profilesDeleteByQuantity():
+    try:
+        quantity_str = request.form.get('quantity', '').strip()
+
+        if not quantity_str:
+            error = "Please enter a quantity"
+            profiles = Profile.query.all()
+            return render_template('admin_profiles.html', profiles=profiles, error=error)
+
+        try:
+            quantity = int(quantity_str)
+        except ValueError:
+            error = "Please enter a valid number"
+            profiles = Profile.query.all()
+            return render_template('admin_profiles.html', profiles=profiles, error=error)
+
+        profiles_to_delete = Profile.query.filter(Profile.quan >= quantity)
+
+        if not profiles_to_delete:
+            error = f"No profiles found with {quantity} or more guests."
+            profiles = Profile.query.all()
+            return render_template('admin_profiles.html', profiles=profile, error=error)
+
+        for profile in profiles_to_delete:
+            db.session.delete(profile)
+
+        db.session.commit()
+
+        return redirect(url_for('admin_profiles'))
+
+    except Exception as e:
+        error = f"Error deleting profiles: {str(e)}"
         profiles = Profile.query.all()
         return render_template('admin_profiles.html', profiles=profiles, error=error)
 

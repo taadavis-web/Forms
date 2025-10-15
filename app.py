@@ -117,6 +117,20 @@ def admin_profiles_deleteFirst():
         return render_template('admin_profiles.html', profiles=profiles, error=error)
 
 
+@app.route('/admin/profiles/deleteCoworker')
+def admin_profiles_deleteCoworker():
+    try:
+        deleted_count = Profile.query.filter_by(rel="coworker etc.").delete()
+
+        db.session.commit()
+
+        return redirect(url_for('admin_profiles'))
+    except Exception as e:
+        error = f"Error deleting coworker profiles: {str(e)}"
+        profiles = Profile.query.all()
+        return render_template('admin_profiles.html', profiles=profiles, error=error)
+
+
 @app.route('/admin/profiles/AppendComments')
 def admin_profiles_appendComments():
     try:

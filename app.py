@@ -94,6 +94,29 @@ def profile():
     return render_template('profileForm.html')
 
 
+@app.route('/admin/profiles/AppendComments')
+def admin_profiles_appendComments():
+    try:
+        profiles_to_update = Profile.query.filter_by(accommodations=True).all()
+
+        for profile in profiles_to_update:
+            if "email accommodations form" not in profile.comments:
+                profile.comments += " - email accommodations form"
+
+        db.session.commit()
+
+        # profiles = Profile.query.all()
+        # return render_template('admin_profiles.html', profiles=profiles, error=errorMsg)
+
+        return redirect(url_for('admin_profiles'))
+
+    except Exception as e:
+        db.session.rollback()
+        errorMsg = f"Error updating profiles: {str(e)}"
+        profiles = Profile.query.all()
+        return render_template('admin_profiles.html', profiles=profiles, error=errorMsg)
+
+
 @app.route('/feedback', methods=['GET', 'POST'])
 def feedback():
     method = request.form.get('requestMethod', '')
@@ -148,6 +171,7 @@ def feedback():
 def admin_profiles():
     profiles = Profile.query.all()
     return render_template('admin_profiles.html', profiles=profiles)
+
 
 @app.route('/admin/profiles/sibling')
 def admin_profiles_sibling():

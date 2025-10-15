@@ -1,10 +1,18 @@
-{% extends 'base.html' %} {% block title %}{{super()}} - Profiles Admin {%
-endblock%} {% block content %}
+{% extends 'base.html' %} 
+{% block title %}{{super()}} - Profiles Admin {%
+endblock%} 
+
+
+
+{% block content %}
 <h1>All Profiles</h1>
 
 {% if error %}
 <p class="error">{{error}}</p>
 {% endif %}
+
+<a href="{{url_for('admin_profiles_appendComments')}}">Append to Comments</a>
+
 
 <table class="table table-striped" border="1">
   <tr>
@@ -32,3 +40,5 @@ endblock%} {% block content %}
 </table>
 
 {% endblock %}
+
+

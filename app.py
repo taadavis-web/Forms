@@ -130,6 +130,19 @@ def admin_profiles_deleteCoworker():
         profiles = Profile.query.all()
         return render_template('admin_profiles.html', profiles=profiles, error=error)
 
+@app.route('/admin/profiles/deleteAudaciousGuest')
+def admin_profiles_delete_audacious_guests():
+    try:
+        deleted_count = Profile.query.filter(Profile.quan > 5).delete()
+        
+        db.session.commit()
+        
+        return redirect(url_for('admin_profiles'))
+    except Exception as e:
+        error = f"Error deleting audacious profiles: {str(e)}"
+        profiles = Profile.query.all()
+        return render_template('admin_profiles.html', profiles=profiles, error=error)
+
 
 @app.route('/admin/profiles/AppendComments')
 def admin_profiles_appendComments():

@@ -182,6 +182,36 @@ def admin_profilesDeleteByQuantity():
         return render_template('admin_profiles.html', profiles=profiles, error=error)
 
 
+@app.route('/admin/profiles/deleteButton', methods=['POST'])
+def admin_profilesDeleteButton():
+    try:
+        profileId = request.form.get('profileId', '')
+
+        if not profileId:
+            error = f"No profile id included for deletion."
+            profiles = Profile.query.all()
+            return render_template('admin_profiles.html', profiles=profiles, error=error)
+
+        profile_to_delete = Profile.query.filter_by(id=profileId).first()
+
+        if not profile_to_delete:
+            error = f"No profile found with id = {profileId}"
+            profiles = Profile.query.all()
+            return render_template('admin_profiles.html', profiles=profiles, error=error)
+
+        db.session.delete(profile_to_delete)
+
+        db.session.commit()
+
+        return redirect(url_for('admin_profiles'))
+
+    except Exception as e:
+        db.session.rollback()
+        error = f"Error writing to database file."
+        profiles = Profile.query.all()
+        return render_template('admin_profiles.html', profiles=profiles, error=error)
+
+
 @app.route('/admin/profiles/AppendComments')
 def admin_profiles_appendComments():
     try:

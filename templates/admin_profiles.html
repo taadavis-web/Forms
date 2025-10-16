@@ -36,6 +36,7 @@ endblock%} {% block content %}
     <th>Accommodations</th>
     <th>Comments</th>
     <th>Created At</th>
+    <th>Delete</th>
   </tr>
   {% for profile in profiles %}
   <tr>
@@ -47,8 +48,21 @@ endblock%} {% block content %}
     <td>{{ profile.accommodations }}</td>
     <td>{{ profile.comments }}</td>
     <td>{{ profile.created_at }}</td>
+    <td>
+      <div>
+        <form method="POST" action="{{url_for('admin_profilesDeleteButton')}}">
+          <input
+            type="hidden"
+            name="profileId"
+            id="profileId"
+            value="{{profile.id}}"
+          />
+          <button type="submit">Delete</button>
+        </form>
+      </div>
+    </td>
+    {% endfor %}
   </tr>
-  {% endfor %}
 </table>
 
 {% endblock %}

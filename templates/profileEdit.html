@@ -1,0 +1,103 @@
+{% extends "base.html" %} {% block title%}{{super()}} - Edit Profile{% endblock
+%} {% block content%}
+
+<h2>Edit User Profile</h2>
+{% if error %}
+<p class="error">{{error}}</p>
+{% endif %}
+
+<form action="{{url_for('admin_profiles_edit')}}" method="post">
+  <input type="hidden" name="profileId" id="profileId" value="{{profile.id}}" />
+  <div>
+    <label for="name">Name *:</label>
+    <input
+      type="text"
+      name="name"
+      id="name"
+      value="{{profile.name}}"
+      required
+    />
+  </div>
+  <div>
+    <label for="email">Email *:</label>
+    <input
+      type="email"
+      name="email"
+      id="email"
+      value="{{profile.email}}"
+      required
+    />
+  </div>
+  <div>
+    <label for="quan">Total Quantity *:</label>
+    <input
+      type="number"
+      name="quan"
+      id="quan"
+      min="1"
+      ,
+      max="10"
+      value="{{profile.quan}}"
+      required
+    />
+  </div>
+  <div>
+    <label for="comments">Comments or Issues:</label>
+    <textarea
+      name="comments"
+      id="comments"
+      rows="4"
+      value="{{profile.comments}}"
+    ></textarea>
+  </div>
+  <div>
+    <label for="rel">Relationship to me *:</label>
+    <select name="rel" id="rel" required>
+      <option value="">What is guest's relationship to me</option>
+      <option value="parent">Parent / Parent-in-law</option>
+      <option value="sibling">Sibling / Sibling-in-law</option>
+      <option value="other family">Other family member</option>
+      <option value="coworker etc.">Coworker or business</option>
+      <option value="friend">Friend</option>
+      <option value="other">Other</option>
+    </select>
+  </div>
+  <div>
+    <label for="accomodations">Accomodations Required</label>
+    <input
+      type="checkbox"
+      name="accommodations"
+      id="accomodations"
+      value="yes"
+    />
+  </div>
+  <button type="submit">Save Profile</button>
+</form>
+
+<script>
+  function setDropdownSelected(selectElement, value) {
+    for (let i = 0; i < selectElement.options.length; i++) {
+      if (selectElement.options[i].value == value) {
+        selectElement.options[i].selected = true;
+        return;
+      }
+    }
+  }
+
+  relationDropdownElement = document.getElementById("rel");
+  relationValue = "{{profile.rel}}";
+  setDropdownSelected(relationDropdownElement, relationValue);
+
+  function setCheckboxSelected(checkboxElement, value) {
+    if (value == "True") {
+      checkboxElement.checked = "checked";
+    }
+  }
+
+  accommodationsCheckboxElement = document.getElementById("accommodations");
+  accommodationsValue = "{{profile.accommodations}}";
+
+  setCheckboxSelected(accommodationsCheckboxElement, accommodationsValue);
+</script>
+
+{% endblock %}

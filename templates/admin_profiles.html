@@ -49,6 +49,11 @@ endblock%} {% block content %}
     <td>{{ profile.comments }}</td>
     <td>{{ profile.created_at }}</td>
     <td>
+      <a href="{{url_for('admin_profiles_edit')}}?profileId={{profile.id}}"
+        ><button>Edit</button></a
+      >
+    </td>
+    <td>
       <div>
         <form method="POST" action="{{url_for('admin_profilesDeleteButton')}}">
           <input

@@ -300,21 +300,29 @@ def feedback():
 
     if request.method == 'DELETE' or method == 'DELETE':
         id = request.form.get('feedbackId')
-        try:
-            # thisFeedback = Feedback.query.filter_by(id=id).delete()
 
-            feedback = db.session.query(Feedback).filter(
-                Feedback.id == id).first()
-            db.session.delete(feedback)
-            db.session.commit()
-
-            # user = db.session.query(User).filter(User.my_id==1).first()
-            # db.session.delete(user)
-        except Exception as e:
-            db.session.rollback()
-            error = "An error occurred while deleting the record. Please try again."
+        if request.form.get("deleteStyle") == "hard":
+            try:
+                feedback = db.session.query(Feedback).filter(
+                    Feedback.id == id).first()
+                db.session.delete(feedback)
+                db.session.commit()
+            except Exception as e:
+                db.session.rollback()
+                error = "An error occurred while deleting the record. Please try again."
+                return redirect(url_for('admin_feedback'))
             return redirect(url_for('admin_feedback'))
-        return redirect(url_for('admin_feedback'))
+        else:
+            try:
+                feedback = db.session.query(Feedback).filter(
+                    Feedback.id == id).first()
+                feedback.deleted = not feedback.deleted
+                db.session.commit()
+            except Exception as e:
+                db.session.rollback()
+                error = "An error occurred while soft-deleting the record. Please try again."
+                return redirect(url_for('admin_feedback'))
+            return redirect(url_for('admin_feedback'))
     elif request.method == 'POST':
         rating = request.form.get('rating', '').strip()
         comment_text = request.form.get('feedback', '').strip()
@@ -360,6 +368,7 @@ def admin_profiles_sibling():
 def admin_feedback():
     feedbacks = Feedback.query.all()
     return render_template('admin_feedback.html', feedbacks=feedbacks)
+
 
 @app.route('/admin/feedback/edit', methods=['GET', 'POST'])
 def admin_feedback_edit():

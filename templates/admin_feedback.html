@@ -14,7 +14,8 @@
     <th>Updated</th>
     <th>Deleted</th>
     <th>Edit</th>
-    <th>Delete</th>
+    <th>Soft Delete</th>
+    <th>Hard Delete</th>
   </tr>
   {% for feedback in feedbacks %}
   <tr>
@@ -32,6 +33,7 @@
       <form action="{{url_for('feedback')}}" method="POST">
         <input name="feedbackId" type="hidden" value="{{feedback.id}}" />
         <input name="requestMethod" type="hidden" value="DELETE" />
+        <input name="deleteStyle" type="hidden" value="soft" />
 
         <button
           class="btn btn-danger rounded-circle p-3 lh-1 box-shadow shadow"
@@ -39,7 +41,23 @@
           name="submit"
           value="Submit"
         >
-          X
+          Soft
+        </button>
+      </form>
+    </td>
+    <td class="delete-button">
+      <form action="{{url_for('feedback')}}" method="POST">
+        <input name="feedbackId" type="hidden" value="{{feedback.id}}" />
+        <input name="requestMethod" type="hidden" value="DELETE" />
+        <input name="deleteStyle" type="hidden" value="hard" />
+
+        <button
+          class="btn btn-danger rounded-circle p-3 lh-1 box-shadow shadow"
+          type="submit"
+          name="submit"
+          value="Submit"
+        >
+          Hard
         </button>
       </form>
     </td>

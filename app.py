@@ -361,6 +361,53 @@ def admin_feedback():
     feedbacks = Feedback.query.all()
     return render_template('admin_feedback.html', feedbacks=feedbacks)
 
+@app.route('/admin/feedback/edit', methods=['GET', 'POST'])
+def admin_feedback_edit():
+    if request.method == 'POST':
+        feedbackId = request.form.get('id', '')
+
+        if not feedbackId:
+            error = f"No feedback id provided."
+            feedbacks = Feedback.query.all()
+            return render_template('admin_feedback.html', feedbacks=feedbacks, error=error)
+
+        feedbackToUpdate = Feedback.query.filter_by(id=feedbackId).first()
+
+        if not feedbackToUpdate:
+            error = f"No feedback found to edit with id = {feedbackId}."
+            feedbacks = Feedback.query.all()
+            return render_template('admin_feedback.html', feedbacks=feedbacks, error=error)
+
+        try:
+            feedbackToUpdate.rating = request.form.get(
+                'rating', feedbackToUpdate.rating)
+            feedbackToUpdate.comment = request.form.get(
+                'comment', feedbackToUpdate.comment)
+            feedbackToUpdate.updated = datetime.now(timezone.utc)
+            db.session.commit()
+            return redirect(url_for('admin_feedback'))
+        except Exception as e:
+            db.session.rollback()
+            error = f"Error writing to database file."
+            feedbacks = Profile.query.all()
+            return render_template('admin_feedback.html', feedbacks=feedbacks, error=error)
+
+    feedbackId = request.args.get('feedbackId')
+
+    if not feedbackId:
+        error = f"No feedback id provided."
+        feedbacks = Feedback.query.all()
+        return render_template('admin_feedback.html', feedbacks=feedbacks, error=error)
+
+    feedbackToEdit = Feedback.query.filter_by(id=feedbackId).first()
+
+    if not feedbackToEdit:
+        error = f"No feedback found to edit with id = {feedbackId}"
+        feedbacks = Feedback.query.all()
+        return render_template('admin_feedback.html', feedbacks=feedbacks, error=error)
+
+    return render_template('feedbackEdit.html', feedback=feedbackToEdit)
+
 
 @app.route('/admin/feedback/rating_1')
 def admin_feedback_rating_1():

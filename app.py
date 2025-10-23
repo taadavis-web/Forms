@@ -202,12 +202,18 @@ def admin_profilesDeleteButton():
             error = f"No profile found with id = {profileId}"
             profiles = Profile.query.all()
             return render_template('admin_profiles.html', profiles=profiles, error=error)
+        if request.form.get('deleteStyle') == 'hard':
+            db.session.delete(profile_to_delete)
 
-        db.session.delete(profile_to_delete)
+            db.session.commit()
 
-        db.session.commit()
+            return redirect(url_for('admin_profiles'))
+        else:
+            profile_to_delete.deleted = not profile_to_delete.deleted
 
-        return redirect(url_for('admin_profiles'))
+            db.session.commit()
+
+            return redirect(url_for('admin_profiles'))
 
     except Exception as e:
         db.session.rollback()

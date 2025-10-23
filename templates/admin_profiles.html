@@ -39,7 +39,8 @@ endblock%} {% block content %}
     <th>Updated</th>
     <th>Deleted</th>
     <th>Edit</th>
-    <th>Delete</th>
+    <th>Soft Delete</th>
+    <th>Hard Delete</th>
   </tr>
   {% for profile in profiles %}
   <tr>
@@ -67,7 +68,22 @@ endblock%} {% block content %}
             id="profileId"
             value="{{profile.id}}"
           />
-          <button type="submit">Delete</button>
+        <input name="deleteStyle" type="hidden" value="soft" />
+          <button type="submit">Soft</button>
+        </form>
+      </div>
+    </td>
+    <td>
+      <div>
+        <form method="POST" action="{{url_for('admin_profilesDeleteButton')}}">
+          <input
+            type="hidden"
+            name="profileId"
+            id="profileId"
+            value="{{profile.id}}"
+          />
+        <input name="deleteStyle" type="hidden" value="hard" />
+          <button type="submit">Hard</button>
         </form>
       </div>
     </td>

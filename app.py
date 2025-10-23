@@ -245,6 +245,7 @@ def admin_profiles_edit():
                 'accommodations', False) == "yes"
             profileToUpdate.comments = request.form.get(
                 'comments', profileToUpdate.comments)
+            profileToUpdate.updated = datetime.now(timezone.utc)
             db.session.commit()
             return redirect(url_for('admin_profiles'))
         except Exception as e:

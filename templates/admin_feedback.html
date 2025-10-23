@@ -15,12 +15,18 @@
     <tr>
       <th>Rating</th>
       <th>Comments</th>
+      <th>Created</th>
+      <th>Updated</th>
+      <th>Deleted</th>
       <th>Delete</th>
     </tr>
     {% for feedback in feedbacks %}
     <tr>
       <td>{{ feedback.rating }}</td>
       <td>{{ feedback.comment }}</td>
+      <td>{{ feedback.created_at }}</td>
+      <td>{{ feedback.updated }}</td>
+      <td>{{ feedback.deleted }}</td>
       <td class="delete-button">
         <form action="{{url_for('feedback')}}" method="POST">
           <input name="feedbackId" type="hidden" value="{{feedback.id}}" />

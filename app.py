@@ -25,6 +25,8 @@ class Profile(db.Model):
     rel = db.Column(db.String(50), nullable=False)
     accommodations = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    updated = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    deleted = db.Column(db.Boolean, default=False)
 
 
 admin.add_view(ModelView(Profile, db.session))
@@ -35,6 +37,8 @@ class Feedback(db.Model):
     rating = db.Column(db.Integer, nullable=False)
     comment = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    updated = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    deleted = db.Column(db.Boolean, default=False)
 
 
 admin.add_view(ModelView(Feedback, db.session))

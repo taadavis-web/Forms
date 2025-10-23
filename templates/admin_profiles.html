@@ -36,6 +36,8 @@ endblock%} {% block content %}
     <th>Accommodations</th>
     <th>Comments</th>
     <th>Created At</th>
+    <th>Updated</th>
+    <th>Deleted</th>
     <th>Edit</th>
     <th>Delete</th>
   </tr>
@@ -49,6 +51,8 @@ endblock%} {% block content %}
     <td>{{ profile.accommodations }}</td>
     <td>{{ profile.comments }}</td>
     <td>{{ profile.created_at }}</td>
+    <td>{{ profile.updated }}</td>
+    <td>{{ profile.deleted }}</td>
     <td>
       <a href="{{url_for('admin_profiles_edit')}}?profileId={{profile.id}}"
         ><button>Edit</button></a

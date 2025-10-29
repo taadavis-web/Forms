@@ -51,6 +51,10 @@ with app.app_context():
 def index():
     return redirect(url_for('profile'))
 
+@app.route('/newpage')
+def newPage():
+    message = "Hey how are you today!"
+    return render_template('newpg.html', message=message)
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
